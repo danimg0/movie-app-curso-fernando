@@ -43,11 +43,13 @@ const HomeScreen = () => {
         <MovieHorizontalList
           className="mb-5"
           title="Mejores valoradas"
-          movies={topRatedQuery.data ?? []}
+          // Con este.pages.flat podemos hacer que funcione el infinityQuery
+          movies={topRatedQuery.data?.pages.flat() ?? []}
+          loadNextPage={topRatedQuery.fetchNextPage}
         />
         <MovieHorizontalList
           className="mb-5 "
-          movies={topRatedQuery.data ?? []}
+          movies={topRatedQuery.data?.pages.flat() ?? []}
         />
       </View>
     </ScrollView>

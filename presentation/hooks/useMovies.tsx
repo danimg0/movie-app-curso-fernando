@@ -1,8 +1,8 @@
 import { nowPlayingAction } from "@/core/actions/movies/now-playing.action";
 import { popularAction } from "@/core/actions/movies/popular.actions";
-import { topRatedAction } from "@/core/actions/movies/top_rated";
+import { topRatedAction } from "@/core/actions/movies/top_rated.actions";
 import { upcomingAction } from "@/core/actions/movies/upcoming.actions";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useMovies = () => {
   //Con todo esto se maneja automaticamente el cache y al consultar este query automaticamente
@@ -32,10 +32,15 @@ export const useMovies = () => {
     staleTime: 1000 * 60 * 60 * 24,
   });
 
-  const topRatedQuery = useQuery({
+  const topRatedQuery = useInfiniteQuery({
+    // Para usar el infinityQuery, necesitamos llamar a la funcion asi y necesitamos ciertos parametros
+    initialPageParam: 1, //requerido
     queryKey: ["movies", "topRated"],
-    queryFn: topRatedAction,
+    queryFn: ({ pageParam }) => topRatedAction({ page: pageParam }),
     staleTime: 1000 * 60 * 60 * 24,
+    //Tenemos que establecer la siguiente pagina
+    //El pages es un array de arrays con peliculas
+    getNextPageParam: (lastPage, pages) => pages.length + 1,
   });
 
   return {

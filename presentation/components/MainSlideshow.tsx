@@ -1,6 +1,6 @@
 import { View, Text, useWindowDimensions } from "react-native";
 import React, { useRef } from "react";
-import { Movie } from "@/infrastructure/interfaces/movie.interface";
+import { Movie } from "@/infrastructure/interfaces/movie/movie.interface";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import MoviePoster from "./MoviePoster";
 
